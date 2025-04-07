@@ -25,11 +25,16 @@ jobs:
         path: ~/.sonar/cache
         key: ${{ runner.os }}-sonar
 
+    - name: Build (compile)
+      run: mvn clean compile
+
     - name: SonarQube Scan
       uses: sonarsource/sonarqube-scan-action@master
       with:
         args: >
           -Dsonar.projectKey=healthcheck-service
+          -Dsonar.sources=src
+          -Dsonar.java.binaries=target/classes
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
