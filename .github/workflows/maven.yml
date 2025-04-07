@@ -35,9 +35,9 @@ jobs:
         
     - name: Install Docker Credential Helper
       run: |
-        sudo apt-get update
-        sudo apt-get install -y gnupg2 pass
-        sudo apt-get install -y docker-credential-secretservice
+        git clone https://github.com/docker/docker-credential-helpers.git
+        cd docker-credential-helpers
+        docker buildx bake
 
     - name: Configure Docker to use Credential Helper
       run: |
