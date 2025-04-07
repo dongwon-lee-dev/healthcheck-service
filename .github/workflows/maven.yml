@@ -37,7 +37,7 @@ jobs:
       run: |
         sudo apt-get install amazon-ecr-credential-helper
         mkdir -p ~/.docker
-        echo '{"auths": {"credHelpers": {"public.ecr.aws": "ecr-login", "088351136602.dkr.ecr.us-east-1.amazonaws.com": "ecr-login"}}}' > ~/.docker/config.json
+        echo '{"credsStore": "ecr-login"}' > ~/.docker/config.json
 
         
     - name: Login to AWS ECR
