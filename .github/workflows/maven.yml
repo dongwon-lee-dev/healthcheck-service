@@ -33,6 +33,8 @@ jobs:
           -Dsonar.projectKey=healthcheck-service \
           -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
           -Dsonar.login=${{ secrets.SONAR_TOKEN }})
+
+        echo "$output"
     
         ceTaskId=$(echo "$output" | grep -oP 'ceTaskId=\K[^ ]+')
         echo "ceTaskId=$ceTaskId"
