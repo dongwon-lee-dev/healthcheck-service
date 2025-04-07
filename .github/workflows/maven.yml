@@ -30,6 +30,18 @@ jobs:
       with:
         name: trivy-report
         path: trivy-report.json
+        
+    - name: Install AWS ECR Credential Helper
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y amazon-ecr-credential-helper
+
+    - name: Configure Docker to use AWS ECR Credential Helper
+      run: |
+        mkdir -p ~/.docker
+        echo '{"credsStore": "ecr-login"}' > ~/.docker/config.json
+
+        
     - name: Login to AWS ECR
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
