@@ -29,10 +29,17 @@ jobs:
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
-        mvn clean verify sonar:sonar \
-          -Dsonar.projectKey=my-project-key \
+        output=$(mvn clean verify sonar:sonar \
+          -Dsonar.projectKey=BoardGame \
           -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
+          | tee /dev/tty)
+    
+        ceTaskId=$(echo "$output" | grep -oP 'ceTaskId=\K[^ ]+')
+        echo "ceTaskId=$ceTaskId"
+        echo "ceTaskId=$ceTaskId" >> $GITHUB_OUTPUT
+
+          
     - name: Wait for Quality Gate
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -49,7 +56,7 @@ jobs:
             exit 1
           fi
         done
-
+    
         QG_STATUS=$(curl -s -u "${SONAR_TOKEN}:" "${SONAR_HOST_URL}/api/qualitygates/project_status?projectKey=BoardGame" | jq -r '.projectStatus.status')
         echo "Quality Gate status: $QG_STATUS"
         if [ "$QG_STATUS" != "OK" ]; then
