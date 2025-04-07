@@ -35,9 +35,9 @@ jobs:
         
     - name: Install Docker Credential Helper
       run: |
-        git clone https://github.com/docker/docker-credential-helpers.git
-        cd docker-credential-helpers
-        docker buildx bake
+        docker run --privileged --rm tonistiigi/binfmt --install all
+        docker buildx create --use
+        docker buildx bake "https://github.com/docker/docker-credential-helpers.git"
 
     - name: Configure Docker to use Credential Helper
       run: |
