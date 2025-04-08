@@ -75,5 +75,15 @@
 			</plugin>
 		</plugins>
 	</build>
+	<distributionManagement>
+	        <repository>
+	            <id>healthcheck-service-release</id>
+	            <url>https://nexus.app.dongwonlee.dev/repository/healthcheck-service-releases/</url>
+	        </repository>
+	        <snapshotRepository>
+	            <id>healthcheck-service-snapshot</id>
+	            <url>https://nexus.app.dongwonlee.dev/repository/healthcheck-service-snapshots/</url>
+	        </snapshotRepository>
+   	 </distributionManagement>
 
 </project>
